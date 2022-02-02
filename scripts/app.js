@@ -2,7 +2,9 @@ let parse = document.getElementById('parse'),
     show = document.getElementById('show'),
     requestURL = 'https://api.coingecko.com/api/v3/global',
     request = new XMLHttpRequest(),
-    data;
+    data,
+    db = new Object(),
+    criptoName;
 
     request.open('GET', requestURL);
     request.responseType = 'text';
@@ -13,11 +15,11 @@ let parse = document.getElementById('parse'),
     };
 parse.onclick = function () {
     let mkp = data.data.market_cap_percentage,
-        db = new Object(),
         size = Object.keys(mkp).length;
+        
 
     for (let i in mkp) {
-        let criptoName;
+        
         if (mkp.hasOwnProperty(i)) {
             criptoName = i;
         }
@@ -31,21 +33,22 @@ parse.onclick = function () {
 
 show.onclick = function () {
     let table = document.createElement('table'),
-        thead = document.createElement('thead'),
         tbody = document.createElement('tbody'),
         th = document.createElement('th'),
         tr = document.createElement('tr'),
         td = document.createElement('td');
-
-    table.appendChild(thead);
-    table.appendChild(tbody);
-    thead.appendChild(tr);
-    tbody.appendChild(tr);
-    tr.appendChild(th);
-    tr.appendChild(td);
-
-    document.getElementById('body').appendChild(table);
-
+        //text = document.createTextNode()
 
     
+
+    for (let i in db) {
+        console.log(i);
+        tbody.appendChild(tr);
+        tr.appendChild(th);
+        th.innerHTML = criptoName;
+        tr.appendChild(td);
+        td.innerHTML = db[criptoName];
+    }
+    table.appendChild(tbody);
+    document.getElementById('body').appendChild(table);
 };
